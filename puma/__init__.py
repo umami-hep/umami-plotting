@@ -2,7 +2,7 @@
 
 # flake8: noqa
 
-__version__ = "0.2.4"
+__version__ = "0.2.5"
 
 from puma.histogram import Histogram, HistogramPlot
 from puma.line_plot_2d import Line2D, Line2DPlot

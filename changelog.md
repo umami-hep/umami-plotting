@@ -2,6 +2,9 @@
 
 ### [Latest]
 
+### [v0.2.5] (2023/05/12)
+
+- Update requirements to include atlas-ftag-tools v0.1.3 [!180](https://github.com/umami-hep/puma/pull/180)
 - Use `VarVsVar` as a base class for `VarVsEff` [!179](https://github.com/umami-hep/puma/pull/179)
 - Adding fraction scans to high level API [!178](https://github.com/umami-hep/puma/pull/178)
 - Update pre-commit (using ruff) and store tagger scores as structured array [!177](https://github.com/umami-hep/puma/pull/177)
