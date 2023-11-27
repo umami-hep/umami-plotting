@@ -80,6 +80,27 @@ class ResultsTestCase(unittest.TestCase):
         d["R10TruthLabel"] = f["jets"]["HadronConeExclTruthLabelID"]
         d["MockTagger_phbb"] = f["jets"]["MockTagger_pb"]
         d["MockTagger_phcc"] = f["jets"]["MockTagger_pc"]
+        d["MockTagger_ptqqb"] = f["jets"]["MockTagger_pu"]
+        d["MockTagger_pqcd"] = f["jets"]["MockTagger_pu"]
+        d["pt"] = f["jets"]["pt"]
+        array = structured_from_dict(d)
+        with tempfile.TemporaryDirectory() as tmp_file:
+            fname = Path(tmp_file) / "test.h5"
+            with h5py.File(fname, "w") as f:
+                f.create_dataset("jets", data=array)
+
+            results = Results(signal="hbb", sample="test")
+            results.add_taggers_from_file(
+                [Tagger("MockTagger")], fname, label_var="R10TruthLabel"
+            )
+
+    def test_add_taggers_hbb_legacy(self):
+        # get mock file and rename variables match hbb
+        f = get_mock_file()[1]
+        d = {}
+        d["R10TruthLabel"] = f["jets"]["HadronConeExclTruthLabelID"]
+        d["MockTagger_phbb"] = f["jets"]["MockTagger_pb"]
+        d["MockTagger_phcc"] = f["jets"]["MockTagger_pc"]
         d["MockTagger_ptop"] = f["jets"]["MockTagger_pu"]
         d["MockTagger_pqcd"] = f["jets"]["MockTagger_pu"]
         d["pt"] = f["jets"]["pt"]

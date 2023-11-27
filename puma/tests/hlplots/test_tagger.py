@@ -175,14 +175,14 @@ class TaggerTestCase(unittest.TestCase):
         from ftag import Flavours as F
 
         tagger = Tagger(
-            "dummy", output_flavours=[F["hbb"], F["hcc"], F["top"], F["qcd"]]
+            "dummy", output_flavours=[F["hbb"], F["hcc"], F["tqqb"], F["qcd"]]
         )
         tagger.scores = u2s(
             np.column_stack((np.ones(10), np.ones(10), np.ones(10), np.ones(10))),
             dtype=[
                 ("dummy_phbb", "f4"),
                 ("dummy_phcc", "f4"),
-                ("dummy_ptop", "f4"),
+                ("dummy_ptqqb", "f4"),
                 ("dummy_pqcd", "f4"),
             ],
         )

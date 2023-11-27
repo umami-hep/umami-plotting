@@ -13,4 +13,4 @@ scipy==1.10.1
 tables==3.7.0
 testfixtures==7.0.0
 palettable==3.3.0
-atlas-ftag-tools==0.1.11
+atlas-ftag-tools==0.1.12

@@ -48,9 +48,9 @@ class Results:
         elif self.signal == Flavours.cjets:
             self.backgrounds = [Flavours.bjets, Flavours.ujets]
         elif self.signal == Flavours.hbb:
-            self.backgrounds = [Flavours.hcc, Flavours.top, Flavours.qcd]
+            self.backgrounds = [Flavours.hcc, Flavours.tqqb, Flavours.qcd]
         elif self.signal == Flavours.hcc:
-            self.backgrounds = [Flavours.hbb, Flavours.top, Flavours.qcd]
+            self.backgrounds = [Flavours.hbb, Flavours.tqqb, Flavours.qcd]
         else:
             raise ValueError(f"Unsupported signal class {self.signal}.")
 
@@ -153,7 +153,17 @@ class Results:
 
         # load data
         reader = H5Reader(file_path, precision="full")
-        data = reader.load({key: var_list}, num_jets)[key]
+        try:
+            data = reader.load({key: var_list}, num_jets)[key]
+        except Exception as e:
+            # backward-compatibility for first versions of Xbb tagger in which
+            # fully contained top class is called top and not tqqb change names
+            if "tqqb" not in var_list: raise e
+            new_var_list = [v if v=="tqqb" else "top" for v in var_list]
+            var_list = new_var_list
+            new_backgrounds = [b if b!=Flavours.tqqb else Flavours.top for b in self.backgrounds]
+            self.backgrounds = new_backgrounds
+            data = reader.load({key: var_list}, num_jets)[key]
         # check for nan values
         data = check_nan(data)
 
